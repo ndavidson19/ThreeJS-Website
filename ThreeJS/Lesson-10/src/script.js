@@ -12,6 +12,23 @@ import * as dat from 'dat.gui'
 const gui = new dat.GUI()
 
 
+const parameters = {
+    color: 0xff0000,
+    spin: () =>
+    {
+        gsap.to(mesh.rotation, {y : mesh.rotation.y + 10, duration: 1})
+    }
+}
+
+gui 
+    .addColor(parameters, 'color')
+    .onChange(() =>
+    {
+        material.color.set(parameters.color)
+    })
+
+gui
+    .add(parameters, 'spin')
 /**
  * Base
  */
@@ -31,8 +48,17 @@ scene.add(mesh)
 
 
 // Debug
-gui.add(mesh.position, 'y')
+gui
+    .add(mesh.position, 'y')
+    .min(-3)
+    .max(3)
+    .step(0.01)
+    .name('elevation')
+gui 
+    .add(mesh, 'visible')
 
+gui 
+    .add(material, 'wireframe')
 /**
  * Sizes
  */
